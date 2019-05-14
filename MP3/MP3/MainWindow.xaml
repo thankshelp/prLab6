@@ -11,11 +11,12 @@
         <Button x:Name="start" Content="Play" HorizontalAlignment="Left" Height="19" Margin="190,18,0,0" VerticalAlignment="Top" Width="66" Click="Start_Click"/>
         <Button x:Name="pause" Content="Pause" HorizontalAlignment="Left" Height="19" Margin="190,84,0,0" VerticalAlignment="Top" Width="66" RenderTransformOrigin="-0.098,-10.184" Click="Pause_Click"/>
         <Button x:Name="stop" Content="Stop" HorizontalAlignment="Left" Height="19" Margin="190,50,0,0" VerticalAlignment="Top" Width="66" Click="Stop_Click"/>
-        <Slider x:Name="slid" HorizontalAlignment="Left" Height="24" Margin="10,269,0,0" VerticalAlignment="Top" Width="246"/>
-        <Slider x:Name="volume" HorizontalAlignment="Left" Height="19" Margin="62,285,0,0" VerticalAlignment="Top" Width="87"/>
+        <Slider x:Name="slid" HorizontalAlignment="Left" Height="24" Margin="10,269,0,0" VerticalAlignment="Top" Width="246"  ValueChanged="slid_ValueChanged"/>
+        <Slider x:Name="volume" HorizontalAlignment="Left" Height="19" Margin="62,285,0,0" VerticalAlignment="Top" Width="87" ValueChanged="volume_ValueChanged"/>
         <Label Content="Volume:" HorizontalAlignment="Left" Height="28" Margin="10,281,0,0" VerticalAlignment="Top" Width="67"/>
-        <Label x:Name="tv" Content="" HorizontalAlignment="Left" Height="26" Margin="10,243,0,0" VerticalAlignment="Top" Width="45"/>
-        <Label x:Name="dlina" Content="" HorizontalAlignment="Left" Height="26" Margin="211,243,0,0" VerticalAlignment="Top" Width="45"/>
+        <Label x:Name="tv" Content="" HorizontalAlignment="Left" Height="26" Margin="10,243,0,0" VerticalAlignment="Top" Width="67"/>
+        <Label x:Name="dlina" Content="" HorizontalAlignment="Left" Height="26" Margin="211,243,0,0" VerticalAlignment="Top" Width="62"/>
+        <Button x:Name="Add" Content="Add track" HorizontalAlignment="Left" Height="19" Margin="190,117,0,0" VerticalAlignment="Top" Width="66" RenderTransformOrigin="-0.098,-10.184" Click="Add_Click"/>
 
     </Grid>
 </Window>

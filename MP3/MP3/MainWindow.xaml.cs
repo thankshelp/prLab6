@@ -21,9 +21,13 @@ namespace MP3
     /// </summary>
     public partial class MainWindow : Window
     {
+        Dictionary<string, string> list = new Dictionary<string, string>();
         MediaPlayer player = new MediaPlayer();
+        TimeSpan ts;
         string nm;
         Duration time;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,13 +37,14 @@ namespace MP3
         {
             player.Play();
             dlina.Content = time;
-            
+            tv.Content = player.Position;
         }
 
         private void Stack_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             nm = stack.Items[stack.SelectedIndex].ToString();
-            player.Open(new Uri(nm, UriKind.Relative));
+            string b = list[nm];
+            player.Open(new Uri(b, UriKind.Relative));
             time = player.NaturalDuration;
         }
 
@@ -51,7 +56,33 @@ namespace MP3
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
             player.Stop();
-            player.Close();
+            dlina.Content = "";
         }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+           
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.ShowDialog();
+            
+            nm = System.IO.Path.GetFileNameWithoutExtension(dlg.FileName);
+            list.Add(nm, dlg.FileName);
+            stack.Items.Add(nm);
+
+        }
+
+        private void volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void slid_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int sliderValue = (int)slid.Value;
+
+            ts = new TimeSpan(0, 0, 0, 0, sliderValue);
+            player.Position = ts;
+        }
+
     }
 }
