@@ -1,0 +1,22 @@
+﻿<Window x:Class="MP4.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MP4"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="607">
+    <Grid>
+        <MediaElement x:Name="vid" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="560" Margin="20,22,0,0" LoadedBehavior="Manual" MediaOpened="vid_MediaOpened"/>
+        <Button x:Name="start" HorizontalAlignment="Left" Height="22" Margin="20,372,0,0" VerticalAlignment="Top" Width="79" RenderTransformOrigin="0.506,0.5" Content="Play" Click="start_Click"/>
+        <Button x:Name="pause" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="79" RenderTransformOrigin="0.506,0.5" Margin="104,371,0,0" Content="Pause" Click="pause_Click"/>
+        <Button x:Name="stop" Content="Stop" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="79" RenderTransformOrigin="0.506,0.5" Margin="188,371,0,0" Click="stop_Click"/>
+        <Button x:Name="add" Content="Add video" HorizontalAlignment="Left" Height="22" Margin="272,371,0,0" VerticalAlignment="Top" Width="79" Click="add_Click"/>
+        <Slider x:Name="slid" HorizontalAlignment="Left" Height="20" Margin="20,346,0,0" VerticalAlignment="Top" Width="560" Thumb.DragStarted ="slid_ValueStarted" ValueChanged="slid_ValueChanged" Thumb.DragCompleted ="slid_ValueCompleted"/>
+        <Slider x:Name="volume" HorizontalAlignment="Left" Height="21" Margin="413,373,0,0" VerticalAlignment="Top" Width="167"/>
+        <Label Content="Volume:" HorizontalAlignment="Left" Height="32" Margin="356,369,0,0" VerticalAlignment="Top" Width="72"/>
+        <Label x:Name="dlina" Content="" HorizontalAlignment="Left" Height="39" Margin="514,327,0,0" VerticalAlignment="Top" Width="66"/>
+        <Label x:Name="tv" Content="" HorizontalAlignment="Left" Height="39" Margin="20,327,0,0" VerticalAlignment="Top" Width="66"/>
+
+    </Grid>
+</Window>
