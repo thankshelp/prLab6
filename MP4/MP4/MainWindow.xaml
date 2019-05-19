@@ -12,11 +12,11 @@
         <Button x:Name="pause" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="79" RenderTransformOrigin="0.506,0.5" Margin="104,371,0,0" Content="Pause" Click="pause_Click"/>
         <Button x:Name="stop" Content="Stop" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="79" RenderTransformOrigin="0.506,0.5" Margin="188,371,0,0" Click="stop_Click"/>
         <Button x:Name="add" Content="Add video" HorizontalAlignment="Left" Height="22" Margin="272,371,0,0" VerticalAlignment="Top" Width="79" Click="add_Click"/>
-        <Slider x:Name="slid" HorizontalAlignment="Left" Height="20" Margin="20,346,0,0" VerticalAlignment="Top" Width="560" Thumb.DragStarted ="slid_ValueStarted" ValueChanged="slid_ValueChanged" Thumb.DragCompleted ="slid_ValueCompleted"/>
-        <Slider x:Name="volume" HorizontalAlignment="Left" Height="21" Margin="413,373,0,0" VerticalAlignment="Top" Width="167"/>
-        <Label Content="Volume:" HorizontalAlignment="Left" Height="32" Margin="356,369,0,0" VerticalAlignment="Top" Width="72"/>
-        <Label x:Name="dlina" Content="" HorizontalAlignment="Left" Height="39" Margin="514,327,0,0" VerticalAlignment="Top" Width="66"/>
-        <Label x:Name="tv" Content="" HorizontalAlignment="Left" Height="39" Margin="20,327,0,0" VerticalAlignment="Top" Width="66"/>
+        <Slider x:Name="slid" HorizontalAlignment="Left" Height="20" Margin="20,346,0,0" VerticalAlignment="Top" Width="540" Thumb.DragStarted ="slid_ValueStarted" ValueChanged="slid_ValueChanged" Thumb.DragCompleted ="slid_ValueCompleted"/>
+        <Slider x:Name="vol" HorizontalAlignment="Left" Height="21" Margin="413,373,0,0" VerticalAlignment="Top" Width="147" ValueChanged="Vol_ValueChanged"/>
+        <Label Content="Volume:" HorizontalAlignment="Left" Height="32" Margin="356,369,0,0" VerticalAlignment="Top" Width="52"/>
+        <Label x:Name="dlina" Content="" HorizontalAlignment="Left" Height="24" Margin="514,322,0,0" VerticalAlignment="Top" Width="66"/>
+        <Label x:Name="tv" Content="" HorizontalAlignment="Left" Height="24" Margin="20,322,0,0" VerticalAlignment="Top" Width="66"/>
 
     </Grid>
 </Window>

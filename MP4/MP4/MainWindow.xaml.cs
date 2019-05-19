@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+﻿ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,6 @@ namespace MP4
     {
         System.Windows.Threading.DispatcherTimer Timer;
         TimeSpan ts;
-        Duration time;
         bool v = false;
 
         public MainWindow()
@@ -34,6 +33,16 @@ namespace MP4
             Timer = new System.Windows.Threading.DispatcherTimer();
             Timer.Tick += new EventHandler(dispatcherTimer_Tick);
             Timer.Interval = new TimeSpan(0, 0, 1);
+        }
+
+        private void vid_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            vol.Maximum = 100.0;
+            vid.Volume = vol.Value / 100.0;
+            slid.Maximum = vid.NaturalDuration.TimeSpan.TotalSeconds;
+            slid.Value = 0;
+            dlina.Content = vid.NaturalDuration.TimeSpan.Hours + ":" + vid.NaturalDuration.TimeSpan.Minutes + ":" + vid.NaturalDuration.TimeSpan.Seconds;
+            tv.Content = "0:0:0";
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -51,16 +60,14 @@ namespace MP4
             dlg.ShowDialog();
 
             vid.Source = new Uri(dlg.FileName, UriKind.Relative);
-
-            time = vid.NaturalDuration;
+            
         }
 
         private void start_Click(object sender, RoutedEventArgs e)
         {
             vid.Play();
             Timer.Start();
-            dlina.Content = time.TimeSpan.Hours + ":" + time.TimeSpan.Minutes + ":" + time.TimeSpan.Seconds;
-            tv.Content = "0:0:0";
+            
         }
 
         private void pause_Click(object sender, RoutedEventArgs e)
@@ -71,16 +78,12 @@ namespace MP4
         private void stop_Click(object sender, RoutedEventArgs e)
         {
             vid.Stop();
+            Timer.Stop();
             dlina.Content = "";
             tv.Content = "";
         }
 
-        private void vid_MediaOpened(object sender, RoutedEventArgs e)
-        {
-            slid.Maximum = vid.NaturalDuration.TimeSpan.TotalSeconds;
-            slid.Value = 0;
-        }
-
+       
         private void slid_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int sliderValue = (int)slid.Value;
@@ -100,6 +103,12 @@ namespace MP4
             ts = new TimeSpan(0, 0, sliderValue);
             vid.Position = ts;
             v = false;
+        }
+
+        private void Vol_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            float sliderValue = (float)vol.Value;
+            vid.Volume = sliderValue / 100.0;
         }
     }
 }

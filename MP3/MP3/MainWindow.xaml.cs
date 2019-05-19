@@ -27,6 +27,7 @@ namespace MP3
         Dictionary<string, string> list = new Dictionary<string, string>();
         MediaPlayer player = new MediaPlayer();
         TimeSpan ts;
+        int n = -1;
         string nm;
         Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
         bool daHotKak = false;
@@ -44,19 +45,16 @@ namespace MP3
 
         }
 
-        //private void InitializeOpenFileDialog()
-        //{
-            
-        //    this.dlg.Filter = "MP3 (*.MP3)|*.MP3";
-        //    this.dlg.Multiselect = true;
-        //    this.dlg.Title = "My Music Browser";
-        //}
 
         private void Player_MediaOpened(object sender, EventArgs e)
         {
+            vol.Maximum = 100.0;
             
+            player.Volume = vol.Value/100.0;
             slid.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
             slid.Value = 0;
+            dlina.Content = player.NaturalDuration.TimeSpan.Hours + ":" + player.NaturalDuration.TimeSpan.Minutes + ":" + player.NaturalDuration.TimeSpan.Seconds;
+            tv.Content = "0:0:0";
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -65,15 +63,49 @@ namespace MP3
             {
                 tv.Content = player.Position.Hours + ":" + player.Position.Minutes + ":" + player.Position.Seconds;
                 slid.Value = player.Position.TotalSeconds;
+                if (player.Position == player.NaturalDuration)
+                {
+                    if (rand.IsChecked != true)
+                    {
+                        if (stack.SelectedIndex != n)
+                        {
+                            stack.SelectedIndex++;
+                            nm = stack.Items[stack.SelectedIndex].ToString();
+                            string b = list[nm];
+                            player.Open(new Uri(b, UriKind.Relative));
+                            player.Play();
+                            Timer.Start();
+                        }
+                    }
+                    else
+                    {
+                        stack.SelectedIndex = new Random().Next(0, n);
+                        nm = stack.Items[stack.SelectedIndex].ToString();
+                        string b = list[nm];
+                        player.Open(new Uri(b, UriKind.Relative));
+                        player.Play();
+                        Timer.Start();
+                    }
+                }
             }
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            player.Play();
-            Timer.Start();
-            dlina.Content = player.NaturalDuration.TimeSpan.Hours + ":" + player.NaturalDuration.TimeSpan.Minutes + ":" + player.NaturalDuration.TimeSpan.Seconds;
-            tv.Content = "0:0:0";
+            if (rand.IsChecked == true)
+            {
+                stack.SelectedIndex = new Random().Next(0, n);
+                nm = stack.Items[stack.SelectedIndex].ToString();
+                string b = list[nm];
+                player.Open(new Uri(b, UriKind.Relative));
+                player.Play();
+                Timer.Start();
+            }
+            else
+            {
+                player.Play();
+                Timer.Start();
+            }
         }
 
         private void Stack_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -87,7 +119,6 @@ namespace MP3
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
             player.Pause();
-            
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
@@ -100,50 +131,21 @@ namespace MP3
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
+            n++;
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.ShowDialog();
+            nm = System.IO.Path.GetFileNameWithoutExtension(dlg.FileName);
+            list.Add(nm, dlg.FileName);
 
-            //Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            //dlg.ShowDialog();
-            //InitializeOpenFileDialog();
-
-          
-            //DialogResult dr = this.dlg.ShowDialog();
-            //if (dr == System.Windows.Forms.DialogResult.OK)
-            //{
-            //    // Read the files
-            //    foreach (String file in dlg.FileNames)
-            //    {
-            //        // Create a PictureBox.
-            //        try
-            //        {
-                        nm = System.IO.Path.GetFileNameWithoutExtension(dlg.FileName);
-                        list.Add(nm, dlg.FileName);
-                        stack.Items.Add(nm);
-            //        }
-            //        catch (SecurityException ex)
-            //        {
-            //            // The user lacks appropriate permissions to read files, discover paths, etc.
-            //            MessageBox.Show("Security error. Please contact your administrator for details.\n\n" +
-            //                "Error message: " + ex.Message + "\n\n" +
-            //                "Details (send to Support):\n\n" + ex.StackTrace
-            //            );
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            // Could not load the image - probably related to Windows file system permissions.
-            //            MessageBox.Show("Cannot display the image: " + file.Substring(file.LastIndexOf('\\'))
-            //                + ". You may not have permission to read the file, or " +
-            //                "it may be corrupt.\n\nReported error: " + ex.Message);
-            //        }
-            //    }
-
-            //}
+            stack.Items.Add(nm);
         }
 
         private void volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            int sliderValue = (int)volume.Value;
+            float sliderValue = (float)vol.Value;
+            player.Volume = sliderValue/100.0;
         }
-
+        
         private void slid_DragStarted(object sender, DragStartedEventArgs e)
         {
             daHotKak = true;
@@ -164,5 +166,7 @@ namespace MP3
 
             tv.Content = (sliderValue / 3600).ToString() + ":" + (sliderValue / 60).ToString() + ":" + (sliderValue % 60).ToString();
         }
+
+        
     }
 }
